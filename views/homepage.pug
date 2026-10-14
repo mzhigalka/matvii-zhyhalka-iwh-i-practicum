@@ -1,0 +1,39 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        title= title
+        link(rel="stylesheet" href="/css/style.css")
+    body
+        main.page-shell
+            header.page-header
+                div
+                    p.eyebrow HubSpot Academy practicum
+                    h1 Pets
+                    p.page-intro Custom object records from the HubSpot CRM API.
+                a.button-link(href="/update-cobj") Add to this table
+
+            if errorMessage
+                div.alert.alert--error(role="alert")= errorMessage
+
+            if pets.length
+                .table-wrapper
+                    table
+                        caption.sr-only HubSpot Pet records
+                        thead
+                            tr
+                                th(scope="col") Name
+                                th(scope="col") Type
+                                th(scope="col") Description
+                        tbody
+                            each pet in pets
+                                tr
+                                    td(data-label="Name")= pet.properties.name || '—'
+                                    td(data-label="Type")= pet.properties.type || '—'
+                                    td(data-label="Description")= pet.properties.description || '—'
+            else if !errorMessage
+                .empty-state
+                    h2 No Pets yet
+                    p Create the first Pet record to see it in this table.
+                    a.text-link(href="/update-cobj") Add to this table

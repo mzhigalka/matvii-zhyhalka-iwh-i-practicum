@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        title= title
+        link(rel="stylesheet" href="/css/style.css")
+    body
+        main.page-shell.page-shell--narrow
+            a.back-link(href="/") ← Return to the homepage
+            header.form-header
+                p.eyebrow HubSpot custom object
+                h1 Add a Pet
+                p.page-intro Enter the details to create a new Pet record in HubSpot.
+
+            if errorMessage
+                div.alert.alert--error(role="alert")= errorMessage
+
+            form.pet-form(method="post" action="/update-cobj" novalidate)
+                .form-field
+                    label(for="name") Name
+                    input#name(type="text" name="name" value=values.name || '' maxlength="150" autocomplete="off" required aria-invalid=errors && errors.name ? 'true' : 'false' aria-describedby=errors && errors.name ? 'name-error' : undefined)
+                    if errors && errors.name
+                        p.field-error#name-error= errors.name
+
+                .form-field
+                    label(for="type") Type
+                    input#type(type="text" name="type" value=values.type || '' maxlength="100" autocomplete="off" required aria-invalid=errors && errors.type ? 'true' : 'false' aria-describedby=errors && errors.type ? 'type-error' : undefined)
+                    if errors && errors.type
+                        p.field-error#type-error= errors.type
+
+                .form-field
+                    label(for="description") Description
+                    textarea#description(name="description" rows="6" maxlength="1000" required aria-invalid=errors && errors.description ? 'true' : 'false' aria-describedby=errors && errors.description ? 'description-error' : undefined)= values.description || ''
+                    if errors && errors.description
+                        p.field-error#description-error= errors.description
+
+                button(type="submit") Create Pet
